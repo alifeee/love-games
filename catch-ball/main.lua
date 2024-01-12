@@ -11,22 +11,7 @@ function StepToward(from, to, step)
     return next
 end
 
-function love.conf(t)
-    t.console = true
-end
-
 function love.load()
-    BALL = {
-        x = 100,
-        y = 100,
-        vx = 100,
-        vy = 100,
-        radius = 10,
-        color = { 255, 255, 255 },
-        clicked = false,
-        clicked_color = { 255, 0, 0 }
-    }
-
     -- velocity multiplier for all velocities
     VELOCITY_SCALE = 5
     -- velocity multiplier every frame
@@ -34,9 +19,26 @@ function love.load()
     -- velocity multiplier with mouse distance
     MOUSE_ESCAPE_SCALE = -1
     -- distance divider for mouse distance
-    MOUSE_ESCAPE_DISTANCE = 150
+    MOUSE_ESCAPE_DISTANCE_SCALER = 150
+    -- maximum mouse distance for velocity altering
+    MOUSE_MAXIMUM_DISTANCE = 300
     -- distance off-screen until reappearance on the other side
     OFFSCREEN_BUFFER = 5
+    -- animation time scaler
+    PULSE_ANIMATION_TIMESCALE = 10
+    -- initial ball radius
+    INITIAL_BALL_RADIUS = 10
+
+    BALL = {
+        x = 100,
+        y = 100,
+        vx = 10,
+        vy = 10,
+        radius = INITIAL_BALL_RADIUS,
+        color = { 255, 255, 255 },
+        clicked = false,
+        clicked_color = { 255, 0, 0 },
+    }
 end
 
 function love.update(dt)
@@ -71,7 +73,7 @@ function love.update(dt)
         x = x_d.x / distance,
         y = x_d.y / distance
     }
-    local distance_multiplier = MOUSE_ESCAPE_DISTANCE / distance
+    local distance_multiplier = MOUSE_ESCAPE_DISTANCE_SCALER / distance
 
     -- update location
     local x_ball_2 = {
@@ -92,7 +94,7 @@ function love.update(dt)
     -- update velocities
     -- add mouse escape velocity
     local v_ball_1 = v_ball
-    if mouseInWindow then
+    if mouseInWindow and distance < MOUSE_MAXIMUM_DISTANCE then
         v_ball_1 = {
             x = v_ball.x + distance_multiplier * MOUSE_ESCAPE_SCALE * x_d_u.x,
             y = v_ball.y + distance_multiplier * MOUSE_ESCAPE_SCALE * x_d_u.y
@@ -103,10 +105,17 @@ function love.update(dt)
         x = v_ball_1.x * VELOCITY_SLOWDOWN_SCALE,
         y = v_ball_1.y * VELOCITY_SLOWDOWN_SCALE
     }
+
+    -- pulse animation
+    local time = love.timer.getTime()
+    local new_radius = INITIAL_BALL_RADIUS + math.sin(time * PULSE_ANIMATION_TIMESCALE)
+
+    -- update ball facts
     BALL.x = x_ball_2.x
     BALL.y = x_ball_2.y
     BALL.vx = v_ball_2.x
     BALL.vy = v_ball_2.y
+    BALL.radius = new_radius
 end
 
 function love.mousepressed(x, y, button, istouch)
