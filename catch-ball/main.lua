@@ -18,6 +18,8 @@ function love.load()
     VELOCITY_SLOWDOWN_SCALE = 0.99
     -- velocity multiplier with mouse distance
     MOUSE_ESCAPE_SCALE = -1
+    -- maximum velocity impulse
+    MAXIMUM_VELOCITY_IMPULSE = 100
     -- distance divider for mouse distance
     MOUSE_ESCAPE_DISTANCE_SCALER = 150
     -- maximum mouse distance for velocity altering
@@ -74,6 +76,9 @@ function love.update(dt)
         y = x_d.y / distance
     }
     local distance_multiplier = MOUSE_ESCAPE_DISTANCE_SCALER / distance
+    if distance_multiplier > MAXIMUM_VELOCITY_IMPULSE then
+        distance_multiplier = MAXIMUM_VELOCITY_IMPULSE
+    end
 
     -- update location
     local x_ball_2 = {
@@ -110,6 +115,7 @@ function love.update(dt)
     local time = love.timer.getTime()
     local new_radius = INITIAL_BALL_RADIUS + math.sin(time * PULSE_ANIMATION_TIMESCALE)
 
+    print(math.abs(BALL.vx - v_ball_2.x))
     -- update ball facts
     BALL.x = x_ball_2.x
     BALL.y = x_ball_2.y
