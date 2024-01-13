@@ -115,7 +115,6 @@ function love.update(dt)
     local time = love.timer.getTime()
     local new_radius = INITIAL_BALL_RADIUS + math.sin(time * PULSE_ANIMATION_TIMESCALE)
 
-    print(math.abs(BALL.vx - v_ball_2.x))
     -- update ball facts
     BALL.x = x_ball_2.x
     BALL.y = x_ball_2.y
