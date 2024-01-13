@@ -15,6 +15,7 @@ function mainmenu.load()
     CENTER_Y = window_height / 2
 
     BOGFACE = love.graphics.newFont("BogFace.ttf", 64)
+    DEFAULT_FONT = love.graphics.newFont(32)
 
     -- animation time scaler
     PULSE_ANIMATION_TIMESCALE = 10
@@ -60,6 +61,9 @@ function mainmenu.draw()
 
     -- ball
     ball.draw({ 255, 255, 255 }, BALL.radius, BALL.x, BALL.y)
+
+    love.graphics.setFont(DEFAULT_FONT)
+    drawCenteredText(BALL.x + 20, BALL.y - 50, 200, 100, "<-- click!")
 end
 
 return mainmenu
