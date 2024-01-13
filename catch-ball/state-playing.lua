@@ -1,10 +1,10 @@
+local mouse = {}
 local ball = require "ball"
+local vectors = {}
 
 --
 -- MOUSE FUNCTIONS
 --
-
-local mouse = {}
 function mouse.isInWindow(x, y, width, height)
     -- returns true if mousevector is within window
     -- x, y is mouse position
@@ -16,7 +16,6 @@ end
 -- BALL FUNCTIONS
 --
 
-local ball = {}
 function ball.offEdge(width, height, buffer, position, edge)
     -- if item is off an edge, with a buffer (int) of pixels to allow for item width
     if edge == "top" then
@@ -76,7 +75,6 @@ end
 -- VECTOR FUNCTIONS
 --
 
-local vectors = {}
 
 function vectors.vector(x, y)
     -- turns x, y into vector
@@ -238,7 +236,7 @@ end
 
 function playing.mousepressed(x, y, button, istouch)
     if button == 1 then
-        if math.abs(x - BALL.x) < BALL.radius and math.abs(y - BALL.y) < BALL.radius then
+        if ball.isClicked(BALL.radius, BALL.x, BALL.y, x, y) then
             BALL.clicked = true
         end
     end

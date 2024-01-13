@@ -6,7 +6,6 @@ local mainmenu = require "state-main-menu"
 
 
 function SwitchGameState(gamestate)
-    print("switchin")
     if gamestate.load then
         gamestate.load()
     end
@@ -36,5 +35,11 @@ end
 function love.draw()
     if GAME_STATE.draw then
         GAME_STATE.draw()
+    end
+end
+
+function love.resize(w, h)
+    if GAME_STATE.resize then
+        GAME_STATE.resize(w, h)
     end
 end
