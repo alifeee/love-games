@@ -121,6 +121,22 @@ function vectors.unitVector(a)
     }
 end
 
+function vectors.bounceX(a)
+    -- "bounce" a vector by multiplying x component by -1
+    return {
+        x = -1 * a.x,
+        y = a.y
+    }
+end
+
+function vectors.bounceY(a)
+    -- "bounce" a vector by multiplying y component by -1
+    return {
+        x = a.x,
+        y = -1 * a.y
+    }
+end
+
 --
 -- PLAYING GAME STATE
 --
@@ -141,7 +157,9 @@ function playing.load()
     -- maximum mouse distance for velocity altering
     MOUSE_MAXIMUM_DISTANCE = 300
     -- distance off-screen until reappearance on the other side
-    OFFSCREEN_BUFFER = 5
+    OFFSCREEN_BUFFER = -5
+    -- restitution (percent of momentum lost on bouncing)
+    COEFFICIENT_OF_RESTITUTION = 1
     -- animation time scaler
     PULSE_ANIMATION_TIMESCALE = 10
     -- initial ball radius
@@ -195,14 +213,22 @@ function playing.update(dt)
     local offEdge = ball.offEdgeCurried(window_width, window_height, OFFSCREEN_BUFFER)
     local movedToEdge = ball.movedToEdgeCurried(window_width, window_height, OFFSCREEN_BUFFER)
     if offEdge(ball_position, "left") then
-        ball_position = movedToEdge(ball_position, "right")
-    elseif offEdge(ball_position, "right") then
         ball_position = movedToEdge(ball_position, "left")
+        ball_velocity = vectors.bounceX(ball_velocity)
+        ball_velocity = vectors.multiply(ball_velocity, COEFFICIENT_OF_RESTITUTION)
+    elseif offEdge(ball_position, "right") then
+        ball_position = movedToEdge(ball_position, "right")
+        ball_velocity = vectors.bounceX(ball_velocity)
+        ball_velocity = vectors.multiply(ball_velocity, COEFFICIENT_OF_RESTITUTION)
     end
     if offEdge(ball_position, "top") then
-        ball_position = movedToEdge(ball_position, "bottom")
-    elseif offEdge(ball_position, "bottom") then
         ball_position = movedToEdge(ball_position, "top")
+        ball_velocity = vectors.bounceY(ball_velocity)
+        ball_velocity = vectors.multiply(ball_velocity, COEFFICIENT_OF_RESTITUTION)
+    elseif offEdge(ball_position, "bottom") then
+        ball_position = movedToEdge(ball_position, "bottom")
+        ball_velocity = vectors.bounceY(ball_velocity)
+        ball_velocity = vectors.multiply(ball_velocity, COEFFICIENT_OF_RESTITUTION)
     end
 
     -- update velocities
