@@ -30,4 +30,6 @@ ren catch-ball.zip catch-ball.love
 copy /b love.exe+catch-ball.love build\catch-ball.exe
 ```
 
-The final game is shareable as `catch-ball.exe`.
+Then, you need to put the `.exe` in a folder with all contents from [`./dlls`](./dlls/).
+
+The final game is shareable as the folder (zipped).
