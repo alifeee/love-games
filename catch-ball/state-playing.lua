@@ -169,9 +169,16 @@ function playing.load()
     -- ball pressed colour
     BALL_PRESSED_COLOUR = { 255, 0, 0 }
 
+    BALL_GFX = love.graphics.newImage("ball.png")
+    BALL_GFX_CAUGHT = love.graphics.newImage("ball_caught.png")
+
+    local window_width, window_height = love.graphics.getDimensions()
+    CENTER_X = window_width / 2
+    CENTER_Y = window_height / 2
+
     BALL = {
-        x = 100,
-        y = 100,
+        x = CENTER_X,
+        y = CENTER_Y + 100,
         vx = 10,
         vy = 10,
         radius = INITIAL_BALL_RADIUS,
@@ -254,9 +261,9 @@ end
 
 function playing.draw()
     if not BALL.clicked then
-        ball.draw(BALL_COLOUR, BALL.radius, BALL.x, BALL.y)
+        ball.draw(BALL_GFX, BALL.radius, BALL.x, BALL.y)
     else
-        ball.draw(BALL_PRESSED_COLOUR, BALL.radius, BALL.x, BALL.y)
+        ball.draw(BALL_GFX_CAUGHT, BALL.radius, BALL.x, BALL.y)
     end
 end
 

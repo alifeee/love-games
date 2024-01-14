@@ -17,6 +17,8 @@ function mainmenu.load()
     BOGFACE = love.graphics.newFont("BogFace.ttf", 64)
     DEFAULT_FONT = love.graphics.newFont(32)
 
+    BALL_GFX = love.graphics.newImage("ball.png")
+
     -- animation time scaler
     PULSE_ANIMATION_TIMESCALE = 10
     -- initial ball radius
@@ -60,7 +62,7 @@ function mainmenu.draw()
     drawCenteredText(x, y, w, h, "Catch the ball!")
 
     -- ball
-    ball.draw({ 255, 255, 255 }, BALL.radius, BALL.x, BALL.y)
+    ball.draw(BALL_GFX, BALL.radius, BALL.x, BALL.y)
 
     love.graphics.setFont(DEFAULT_FONT)
     drawCenteredText(BALL.x + 20, BALL.y - 50, 200, 100, "<-- click!")

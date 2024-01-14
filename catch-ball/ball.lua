@@ -8,9 +8,9 @@ function ball.isClicked(radius, x, y, mousex, mousey)
     end
 end
 
-function ball.draw(colour, radius, x, y)
-    love.graphics.setColor(colour)
-    love.graphics.circle("fill", x, y, radius)
+function ball.draw(gfx, radius, x, y)
+    local height = gfx:getPixelHeight()
+    love.graphics.draw(gfx, x - radius, y - radius, 0, BALL.radius * 2 / height)
 end
 
 return ball
