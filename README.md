@@ -27,7 +27,7 @@ cd catch-ball
 tar -a -c -f ../catch-ball.zip *
 cd ..
 ren catch-ball.zip catch-ball.love
-copy /b love.exe+catch-ball.love catch-ball.exe
+copy /b love.exe+catch-ball.love build\catch-ball.exe
 ```
 
 The final game is shareable as `catch-ball.exe`.
