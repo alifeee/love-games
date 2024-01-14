@@ -12,3 +12,7 @@ difficulty
 levels of difficulty
  ball size
  ball acceleration
+
+idle game
+ catch a ball get a ball
+ buy ball catchers
