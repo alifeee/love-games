@@ -1,0 +1,14 @@
+game juice
+sounds
+particles on hit edge
+zoom entire screen on hit edge
+ball rotation
+ball caught animation
+click animation (click-spark!)
+click timer
+
+difficulty
+"corner trapping"
+levels of difficulty
+ ball size
+ ball acceleration
